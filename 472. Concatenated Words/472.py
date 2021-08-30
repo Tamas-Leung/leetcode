@@ -3,18 +3,23 @@ class Solution:
         
 
         wordSet = set(words)
+        memo = {}
         
         def dfs(word):
+            if word in memo:
+                return memo[word]
+            memo[word] = False
             for i in range(1, len(word)):
                 prefix = word[:i]
                 suffix = word[i:]
                 
                 if prefix in wordSet and suffix in wordSet:
+                    memo[word] = True
                     return True
                 if prefix in wordSet and dfs(suffix):
+                    memo[word] = True
                     return True
-                if suffix in wordSet and dfs(prefix):
-                    return True
+                
         
         res = []
         for word in words:
